@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <script src="jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <div id="info">
+            <h1>Stay updated!</h1>
+            <p id="message">Join 60,000+ product managers receiving monthly updates on:</p>
+            <div id="option">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"><g fill="none"><circle cx="10.5" cy="10.5" r="10.5" fill="#FF6155"/><path stroke="#FFF" stroke-width="2" d="M6 11.381 8.735 14 15 8"/></g></svg><span class="option-text">Product discovery and building what matters</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"><g fill="none"><circle cx="10.5" cy="10.5" r="10.5" fill="#FF6155"/><path stroke="#FFF" stroke-width="2" d="M6 11.381 8.735 14 15 8"/></g></svg><span class="option-text">Measuring to ensure updates are a success</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"><g fill="none"><circle cx="10.5" cy="10.5" r="10.5" fill="#FF6155"/><path stroke="#FFF" stroke-width="2" d="M6 11.381 8.735 14 15 8"/></g></svg><span class="option-text">And much more!</span>
+            </div>
+            <form id="email-form" action="">
+                <div id="email-label">
+                    <small><strong>Email address</strong></small>
+                    <smal id="error-message">valid email required</smal>
+                </div>
+                <input type="text" id="email" value="email@company.com">
+                <button type="submit" id="email-submit" class="ok"><strong>Subscribe to monthly newsletter</strong></button>
+            </form>
+        </div>
+        <div id="cover"></div>
+    </div>
+    <div class="attribution">
+            Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+            Coded by <a href="https://www.frontendmentor.io/profile/4nd0x00">4nd0x00</a>.
+    </div>
+    <script>
+        const emailField = $('#email'), errorMessage = $('#error-message')
+
+        $('#email-submit').click((event) => {
+            event.preventDefault()
+            ;(/\S+@\S+\.\S+/.test(emailField.val()) ? summonDialogBox : summonIfErrorState)()
+        })
+
+        function summonDialogBox() {
+            // restore state in case of previous error
+            emailField.css({
+                border: '1px solid hsl(231, 7%, 60%)',
+                background: 'white',
+            })
+            errorMessage.css({visibility: 'hidden'})
+
+            const dialogBox = $(`<div id="box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FF6A3A"/><stop offset="100%" stop-color="#FF527B"/></linearGradient></defs><g fill="none"><circle cx="32" cy="32" r="32" fill="url(#a)"/><path stroke="#FFF" stroke-width="4" d="m18.286 34.686 8.334 7.98 19.094-18.285"/></g></svg>
+                <h1>Thanks for subscribing!</h1>
+                <p>  A confirmation email has been sent to <strong>ash@loremcompany.com</strong>. 
+                        Please open it and click the button inside to confirm your subscription.</p>
+                <button class="ok">Dismiss message</button>
+            </div>`)
+            
+            dialogBox.children('p').children('strong').text(emailField.val())
+            const button = dialogBox.children('button')
+        
+            // store referene to main page
+            button.data('before', $('#container'))
+
+            document.body.replaceChild(dialogBox[0], $('#container')[0])
+
+            button.click(function(event) {
+                // toggle to main page
+                document.body.replaceChild($(this).data('before')[0], dialogBox[0])
+            })
+        }
+
+        function summonIfErrorState() {
+            emailField.css({
+                border: '1px solid red',
+                background: '#FFE8E6',
+            })
+            errorMessage.css({visibility: 'visible'})
+        }
+    </script>
+</body>
+</html>
