@@ -39,10 +39,10 @@
 
         $('#email-submit').click((event) => {
             event.preventDefault()
-            ;(/\S+@\S+\.\S+/.test(emailField.val()) ? summonDialogBox : summonIfErrorState)()
+            ;(/\S+@\S+\.\S+/.test(emailField.val()) ? SummonSuccessBox : summonIfErrorState)()
         })
 
-        function summonDialogBox() {
+        function SummonSuccessBox() {
             // restore state in case of previous error
             emailField.css({
                 border: '1px solid hsl(231, 7%, 60%)',
@@ -50,7 +50,7 @@
             })
             errorMessage.css({visibility: 'hidden'})
 
-            const dialogBox = $(`<div id="box">
+            const successBox = $(`<div id="box">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="100%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#FF6A3A"/><stop offset="100%" stop-color="#FF527B"/></linearGradient></defs><g fill="none"><circle cx="32" cy="32" r="32" fill="url(#a)"/><path stroke="#FFF" stroke-width="4" d="m18.286 34.686 8.334 7.98 19.094-18.285"/></g></svg>
                 <h1>Thanks for subscribing!</h1>
                 <p>  A confirmation email has been sent to <strong>ash@loremcompany.com</strong>. 
@@ -58,17 +58,17 @@
                 <button class="ok">Dismiss message</button>
             </div>`)
             
-            dialogBox.children('p').children('strong').text(emailField.val())
-            const button = dialogBox.children('button')
+            successBox.children('p').children('strong').text(emailField.val())
+            const button = successBox.children('button')
         
             // store referene to main page
             button.data('before', $('#container'))
 
-            document.body.replaceChild(dialogBox[0], $('#container')[0])
+            document.body.replaceChild(successBox[0], $('#container')[0])
 
             button.click(function(event) {
                 // toggle to main page
-                document.body.replaceChild($(this).data('before')[0], dialogBox[0])
+                document.body.replaceChild($(this).data('before')[0], successBox[0])
             })
         }
 
