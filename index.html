@@ -39,10 +39,10 @@
 
         $('#email-submit').click((event) => {
             event.preventDefault()
-            ;(/\S+@\S+\.\S+/.test(emailField.val()) ? SummonSuccessBox : summonIfErrorState)()
+            ;(/\S+@\S+\.\S+/.test(emailField.val()) ? summonSuccessBox : summonIfErrorState)()
         })
 
-        function SummonSuccessBox() {
+        function summonSuccessBox() {
             // restore state in case of previous error
             emailField.css({
                 border: '1px solid hsl(231, 7%, 60%)',
@@ -61,7 +61,7 @@
             successBox.children('p').children('strong').text(emailField.val())
             const button = successBox.children('button')
         
-            // store referene to main page
+            // store referene of main page
             button.data('before', $('#container'))
 
             document.body.replaceChild(successBox[0], $('#container')[0])
